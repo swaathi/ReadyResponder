@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130830162404) do
+ActiveRecord::Schema.define(:version => 20131024115503) do
 
   create_table "activities", :force => true do |t|
     t.string   "content"
@@ -164,6 +164,24 @@ ActiveRecord::Schema.define(:version => 20130830162404) do
     t.string   "zipcode"
   end
 
+  create_table "messages", :force => true do |t|
+    t.integer  "notification_id"
+    t.integer  "person_id"
+    t.string   "status"
+    t.string   "channel"
+    t.string   "content"
+    t.datetime "processed_at"
+    t.string   "processed_by"
+    t.string   "slug"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  create_table "messages_people", :id => false, :force => true do |t|
+    t.integer "message_id"
+    t.integer "person_id"
+  end
+
   create_table "moves", :force => true do |t|
     t.integer  "item_id"
     t.integer  "locatable_id"
@@ -172,6 +190,19 @@ ActiveRecord::Schema.define(:version => 20130830162404) do
     t.string   "reason"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "author_id"
+    t.string   "status"
+    t.string   "channels"
+    t.string   "subject"
+    t.string   "body"
+    t.datetime "sent_at"
+    t.text     "comments"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "people", :force => true do |t|
@@ -234,6 +265,19 @@ ActiveRecord::Schema.define(:version => 20130830162404) do
     t.string   "status"
     t.string   "description"
     t.string   "comments"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "responses", :force => true do |t|
+    t.integer  "message_id"
+    t.integer  "person_id"
+    t.string   "status"
+    t.string   "response"
+    t.string   "reason"
+    t.string   "source"
+    t.string   "raw_data"
+    t.string   "action_taken"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end

@@ -2,7 +2,7 @@ class Event < ActiveRecord::Base
   before_save :calc_duration
 
   attr_accessible :title, :description, :category, :course_id, :duration, :start_time, :end_time, :instructor, :location, :status, :timecard_ids, :person_ids, :comments
- 
+
   def end_date_cannot_be_before_start
     if ((!end_time.blank?) and (!start_time.blank?)) and end_time < start_time
       errors.add(:end_time, "must be after the start, unless you are the Doctor")
@@ -13,7 +13,7 @@ class Event < ActiveRecord::Base
       errors.add(:end_time, "must be after the start, unless you are the Doctor")
     end
   end
-  
+
   validates_presence_of :category, :title, :status
   validate :end_date_cannot_be_before_start
   validates_presence_of :start_time
@@ -22,10 +22,11 @@ class Event < ActiveRecord::Base
   has_many :certs
   belongs_to :course
   has_many :activities, as: :loggable
-  
+
   has_many :timecards
   has_many :people, :through => :timecards
-  
+  has_many :notifications
+
   accepts_nested_attributes_for :timecards
   accepts_nested_attributes_for :certs
 
@@ -88,9 +89,9 @@ class Event < ActiveRecord::Base
 
 private
   def calc_duration #This is also used in timecards; it should be extracted out
-     if !(start_time.blank?) and !(end_time.blank?)
+    if !(start_time.blank?) and !(end_time.blank?)
       self.duration = ((end_time - start_time) / 1.hour).round(2) || 0
-    end 
+    end
   end
 
 end

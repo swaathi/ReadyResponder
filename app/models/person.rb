@@ -11,6 +11,8 @@ class Person < ActiveRecord::Base
 
   has_many :channels
   accepts_nested_attributes_for :channels, allow_destroy: true
+  has_many :messages
+  has_many :notifications, :through => :messages
   has_many :courses, :through => :certs
   has_many :skills, :through => :courses
   has_and_belongs_to_many :titles
@@ -19,7 +21,7 @@ class Person < ActiveRecord::Base
   has_many :items
   has_many :inspections
   has_many :activities, as: :loggable
-  
+
   validates_presence_of :firstname, :lastname, :status
   validates_uniqueness_of :icsid, :allow_nil => true, :allow_blank => true   # this needs to be scoped to active members, or more sophisticated rules
   validates :firstname, :uniqueness => { :scope => :lastname }
@@ -27,8 +29,7 @@ class Person < ActiveRecord::Base
   validates_numericality_of  :height, :weight, :allow_nil => true, :allow_blank => true
   validates_presence_of :division2, :unless => "division1.blank?"
   validates_presence_of :division1, :unless => "division2.blank?"
-  
-  
+
   scope :cert, :order => 'division1, division2, title_order, start_date ASC', :conditions => {:department => "CERT"}
   scope :police, :order => 'division1, division2, title_order, start_date ASC', :conditions => {:department => 'Police'}
   scope :leave, :conditions => {:status => "Leave of Absence"}

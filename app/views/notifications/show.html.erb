@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @notification.event_id %>
+</p>
+
+<p>
+  <b>Author:</b>
+  <%= @notification.author_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @notification.status %>
+</p>
+
+<p>
+  <b>Channels:</b>
+  <%= @notification.channels %>
+</p>
+
+<p>
+  <b>Subject:</b>
+  <%= @notification.subject %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @notification.body %>
+</p>
+
+<p>
+  <b>Sent at:</b>
+  <%= @notification.sent_at %>
+</p>
+
+<p>
+  <b>Comments:</b>
+  <%= @notification.comments %>
+</p>
+
+
+<%= link_to 'Edit', edit_notification_path(@notification) %> |
+<%= link_to 'Back', notifications_path %>
