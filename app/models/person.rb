@@ -2,9 +2,9 @@ class Person < ActiveRecord::Base
   #code to get next un-used id # in the 800 range
   #((801...900).to_a - (array_from_db_of_taken_numbers))[0]
   before_save :title_order
-  
+
   attr_accessible :firstname, :lastname, :status, :icsid, :department, :city, :state, :zipcode, :start_date, :end_date , :title, :gender, :date_of_birth,:division1, :division2, :channels_attributes, :title_ids, :title_order, :comments
-  
+
   #Having a condition on this association allows all the chaining magic to happen. 
   #Could I use a named scope, and/or could I have another association for 'active_certs' ?
   has_many :certs, :conditions => {:status =>'Active' }
@@ -52,12 +52,12 @@ class Person < ActiveRecord::Base
   DIVISION2 = ['Command', 'Squad 1', 'Squad 2', 'CERT']
   STATUS = ['Leave of Absence', 'Inactive', 'Active', 'Applicant','Prospect','Declined']
   DEPARTMENT = ['Police', 'CERT', 'Other']
-  
+
   def fullname
     fname = self.nickname ||= self.firstname
     (fname + " " + (self.middleinitial || "") + " " + self.lastname).squeeze(" ")
   end
-  
+
   def shortrank
     ranks = { 'Director' => 'Dir', 'Chief' => "Chief", "Deputy Chief" => "Deputy", "Captain" => "Capt",
             "Lieutenant" => "Lt", "Sargeant" => "Sgt", "Corporal" => "Cpl",
@@ -65,19 +65,19 @@ class Person < ActiveRecord::Base
             "CERT Member" => "TM", "Recruit" => "Rct" }
     ranks[self.title] || ''
   end
-  
+
   def title_order
     self.title_order = TITLE_ORDER[self.title] || 30
   end
-  
+
   def name
     (self.firstname + " " + self.lastname)
   end
-  
+
   def csz
     self.city + " " + self.state + " " + self.zipcode
   end
-  
+
   def state=(value)
     # custom actions
     write_attribute(:state, value.strip.upcase)
@@ -101,7 +101,7 @@ class Person < ActiveRecord::Base
     end
       age
   end
-  
+
   def skilled?(skill_name)
     skill = Skill.find_by_name(skill_name)
     if skill.blank?
@@ -110,7 +110,7 @@ class Person < ActiveRecord::Base
       self.skills.include?(skill)
     end
   end
-  
+
   def qualified?(title_name)
     title = Title.find_by_name(title_name)
     if title
@@ -119,7 +119,7 @@ class Person < ActiveRecord::Base
       false
     end
   end
-  
+
   def missing_skills(title)
     title = title || Title.find(title)
     if title
@@ -128,7 +128,7 @@ class Person < ActiveRecord::Base
       "Invalid title"
     end
   end
-  
+
   def service_duration
     if self.start_date.present?
       if self.end_date.present?
