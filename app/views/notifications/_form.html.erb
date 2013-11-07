@@ -2,13 +2,11 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :event_id %>
-    <%= f.input :author_id %>
-    <%= f.input :status %>
-    <%= f.input :channels %>
+    <%= f.association :event %>
+    <div class="status"><%= @notification.status %></div>
+    <%= f.input :channels, :as => :select, :collection => Notification::CHANNELS %>
     <%= f.input :subject %>
     <%= f.input :body %>
-    <%= f.input :sent_at %>
     <%= f.input :comments %>
   </div>
 

@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  
+
   def schedule
     @event = Event.find(params[:id])
     @person = Person.find(params[:person_id])
@@ -12,8 +12,6 @@ class EventsController < ApplicationController
     redirect_to event_url(@event), status: :found, notice: @tc ? "Timecard created" : "Timecard not created"
   end
 
-  # GET /events
-  # GET /events.json
   def index
     @events = Event.all
     @page_title = "All Events"
@@ -23,8 +21,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # GET /events/1
-  # GET /events/1.json
   def show
     @event = Event.find(params[:id])
     @page_title = @event.title
@@ -35,8 +31,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # GET /events/new
-  # GET /events/new.json
   def new
     @event = Event.new
     @page_title = "New Event"
@@ -46,17 +40,13 @@ class EventsController < ApplicationController
     end
   end
 
-  # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
     @page_title = "Event: #{@event.title}"
   end
 
-  # POST /events
-  # POST /events.json
   def create
     @event = Event.new(params[:event])
-    
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -68,8 +58,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # PUT /events/1
-  # PUT /events/1.json
   def update
     @event = Event.find(params[:id])
     respond_to do |format|
@@ -83,8 +71,6 @@ class EventsController < ApplicationController
     end
   end
 
-  # DELETE /events/1
-  # DELETE /events/1.json
   def destroy
     @event = Event.find(params[:id])
     @event.destroy

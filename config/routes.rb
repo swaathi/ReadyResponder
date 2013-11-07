@@ -1,6 +1,6 @@
 Lims3::Application.routes.draw do
   resources :notifications
-
+  post 'notifications/:id/notify', to: 'notifications#notify', as: 'notify'
 
   resources :messages
 
@@ -13,7 +13,9 @@ Lims3::Application.routes.draw do
 
   resources :timecards
 
-  resources :events
+  resources :events do
+    resources :notifications, :controller => 'notifications'
+  end
   post 'events/:id/schedule/:person_id/:card_action', to: 'events#schedule', as: 'schedule'
 
   resources :moves

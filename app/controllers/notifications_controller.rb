@@ -1,6 +1,13 @@
 class NotificationsController < ApplicationController
-  # GET /notifications
-  # GET /notifications.json
+  # POST notification/:id/notify
+  def notify
+    @notification = Notification.find(params[:id])
+    @notification.notify
+    render  action: 'show'
+   # @recipient = Person.first
+   # MessageMailer.callout(@notification, @recipient).deliver
+  end
+
   def index
     @notifications = Notification.all
 
@@ -10,10 +17,9 @@ class NotificationsController < ApplicationController
     end
   end
 
-  # GET /notifications/1
-  # GET /notifications/1.json
   def show
     @notification = Notification.find(params[:id])
+    @event = @notification.event
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,24 +27,20 @@ class NotificationsController < ApplicationController
     end
   end
 
-  # GET /notifications/new
-  # GET /notifications/new.json
   def new
     @notification = Notification.new
-
+    @notification.status = 'New'
+    @event = Event.find(params[:event_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notification }
     end
   end
 
-  # GET /notifications/1/edit
   def edit
     @notification = Notification.find(params[:id])
   end
 
-  # POST /notifications
-  # POST /notifications.json
   def create
     @notification = Notification.new(params[:notification])
 
@@ -53,8 +55,6 @@ class NotificationsController < ApplicationController
     end
   end
 
-  # PUT /notifications/1
-  # PUT /notifications/1.json
   def update
     @notification = Notification.find(params[:id])
 
@@ -69,8 +69,6 @@ class NotificationsController < ApplicationController
     end
   end
 
-  # DELETE /notifications/1
-  # DELETE /notifications/1.json
   def destroy
     @notification = Notification.find(params[:id])
     @notification.destroy

@@ -9,6 +9,5 @@ FactoryGirl.define do
     carrier "Sprint"
     last_verified "2013-01-06 01:30:46"
     usage "All"
-    person
   end
 end

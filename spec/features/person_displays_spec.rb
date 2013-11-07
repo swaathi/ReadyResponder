@@ -168,12 +168,12 @@ describe "Person" do
       firstaidskill = FactoryGirl.create(:skill, name: "FRFA")
       title.skills << drivingskill
       title.skills << firstaidskill
-      
+
       frfacourse = FactoryGirl.create(:course, name: "FRFA")
       firstaidskill.courses << frfacourse
       drivingcourse = FactoryGirl.create(:course, name: "Mass DL")
       drivingskill.courses << drivingcourse
-      
+
       person = FactoryGirl.create(:person)
       person.titles << title
       cert = FactoryGirl.create(:cert, person: person, course: frfacourse)

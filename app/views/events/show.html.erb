@@ -45,6 +45,7 @@
   <%= @event.status %>
 </p>
 
+<%= link_to "Callout", new_event_notification_path(@event), :class => 'btn btn-mini' %>
 <div id="event_timecards" >
   <%= render "unknown_for_event" %>
   <%= render "unavailable_for_event" %>

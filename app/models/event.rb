@@ -30,8 +30,8 @@ class Event < ActiveRecord::Base
   accepts_nested_attributes_for :timecards
   accepts_nested_attributes_for :certs
 
-  CATEGORY_CHOICES = ['Training', 'Patrol', 'Meeting', 'Admin', 'Event']
   STATUS_CHOICES = ['Scheduled', 'In-session', 'Completed', 'Cancelled', "Closed"]
+  CATEGORY_CHOICES = ['Training', 'Patrol', 'Meeting', 'Admin', 'Event']
 
   def to_s
     description
