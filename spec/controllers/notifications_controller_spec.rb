@@ -24,7 +24,7 @@ describe NotificationsController do
   # Notification. As you add validations to Notification, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    { "event_id" => "1" }
+    { "event_id" => "1" , "channels" => "SMS"}
   end
 
   # This should return the minimal set of values that should be in the session

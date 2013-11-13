@@ -10,14 +10,16 @@ describe Notification do
   end
 
   describe "displays helpers" do
-    let(:event) { double :event, :name => "Some Big Event" }
-    let(:notification) {Notification.new( :event => double( :event) ) }
-    it "shows the name" do
-      notification.event_name.should eg("Some Big Event")
+    let(:an_event) { Event.new( :title => "Some Big Event")}
+    let(:notification) {Notification.new}
+    it "shows the title" do
+      notification.stub(:event).and_return(an_event)
+      notification.event_title.should eq("Some Big Event")
     end
   end
 
   describe "callout" do
+    #TODO This test may need to be moved to the message tests
     #let(:notification) { Notification.new(subject: 'Test Callout', channels: ["email", "sms"]) }
 #    let(:source_account)      { double :source_account, :decrease => nil }
  #   let(:destination_account) { double :destination_account, :increase => nil }
@@ -26,12 +28,12 @@ describe Notification do
                                                :channels => ["email", "sms"],
                                                :body => "This is the body"}
     let(:reciepient) { double :person, :email => ["jdoe@example.com"]}
-    let(:mail) { MessageMailer.callout(notification, reciepient) }
+    let(:mail) { MessageMailer.callout(notification, reciepient.email) }
 
     it "renders the headers" do
       mail.subject.should eq("Testing Callout")
       mail.to.should eq(["jdoe@example.com"])
-      mail.from.should eq(["callout@billericaema.org"])
+      mail.from.should eq(["records@billericaema.org"])
     end
   end
 end

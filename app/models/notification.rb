@@ -3,7 +3,7 @@ class Notification < ActiveRecord::Base
   # I think a message will be an single message to a single person
   # The message will be expected to find the address to send to
   #
-  attr_accessible :author_id, :body, :channels, :comments, :event, :sent_at, :status, :subject
+  attr_accessible :author_id, :body, :channels, :comments, :event_id, :sent_at, :status, :subject
 
   CHANNELS= ['email']
   validates_presence_of :channels
@@ -26,6 +26,17 @@ class Notification < ActiveRecord::Base
   def notify_via_sms(notification, recipients)
     MessageMailer.callout(notification, recipient_address).deliver
 
+  end
+
+  def event
+    return Event.new if event_id.blank?
+    super
+  end
+
+  def event_title
+    return "No Event" if event.blank?
+    return "Unknown" if event.title.blank?
+    event.title
   end
 
 end

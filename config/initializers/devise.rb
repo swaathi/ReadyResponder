@@ -169,6 +169,7 @@ Devise.setup do |config|
   # and :restful_authentication_sha1 (then you should set stretches to 10, and copy
   # REST_AUTH_SITE_KEY to pepper)
   # config.encryptor = :sha512
+  config.secret_key = 'b076fd28fc1c761c7d2f27ca696f8a003f2fb29c953c70b5882f62dd85473264681d2244a71c299a529479a28056b85bbbecbe37ed03027eb106fee39290f896'
 
   # ==> Configuration for :token_authenticatable
   # Defines name of the authentication token params key

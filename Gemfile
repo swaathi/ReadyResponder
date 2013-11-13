@@ -13,8 +13,8 @@ gem 'cancan'
 #gem 'validates_timeliness', '~> 3.0'
 
 group :test, :development do
-  gem 'thin'
-  gem "rspec-rails"
+  gem 'thin' # Better server when using "rails s"
+  gem "rspec-rails"  # Better tests
   gem "factory_girl_rails", "~> 4.0"
   gem "capybara"
   gem "guard-rspec"
