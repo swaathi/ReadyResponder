@@ -1,17 +1,16 @@
 class Channel < ActiveRecord::Base
   attr_accessible :carrier, :category, :content, :last_verified, :name, :person_id, :priority, :usage, :status
-  
+
   belongs_to :person
 
   def self.phone
    where("category LIKE ?", "%Phone%")
   end
-  
+
   def self.email
    where("category LIKE ?", "%Mail%")
   end	
-  
-  
+
   PRIORITIES = ['1-Call First','2','3','4-Call Last']
   USAGES = ['1-All','2-Emergency Only','3-Info Only','4-Testing']
   STATUSES = ['OK','Wrong Number','Bouncing']

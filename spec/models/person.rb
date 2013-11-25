@@ -2,13 +2,11 @@ require 'spec_helper'
 
 describe Person do
 
-  before (:each) do
-    @person = FactoryGirl.create(:person)
-    @person.channels << FactoryGirl.build(:channel, category: "SMS", priority: "High")
-  end
+  let (:person) { FactoryGirl.build(:person) }
+  @person.channels << FactoryGirl.build(:channel, category: "SMS", priority: "High")
 
   it "has a valid factory" do
-    FactoryGirl.create(:person).should be_valid
+    FactoryGirl.build(:person).should be_valid
   end
 
   it "is invalid without a title" do

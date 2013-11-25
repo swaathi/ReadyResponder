@@ -8,12 +8,12 @@ describe MessageMailer do
     #
     let(:notification) { double :notification, :subject => 'Testing Callout', :channels => ["email", "sms"], :body => "This is the body"}
     let(:reciepient) { double :person, :email => ["jdoe@example.com"]}
-    let(:mail) { MessageMailer.callout(notification, reciepient.email) }
+    let(:mail) { MessageMailer.callout(notification, reciepient, "jdoe@example.com") }
 
     it "renders the headers" do
       mail.subject.should eq("Testing Callout")
       mail.to.should eq(["jdoe@example.com"])
-      mail.from.should eq(["records@billericaema.org"])
+      mail.from.should eq(["callout@billericaema.org"])
     end
 
     it "renders the body" do

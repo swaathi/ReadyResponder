@@ -10,30 +10,33 @@ describe Notification do
   end
 
   describe "displays helpers" do
-    let(:an_event) { Event.new( :title => "Some Big Event")}
-    let(:notification) {Notification.new}
-    it "shows the title" do
-      notification.stub(:event).and_return(an_event)
+    let(:event) { double :event, :title=> "Some Big Event" }
+    let(:notification) { Notification.new }
+    it "shows the name" do
+      notification.stub(:event).and_return(event)
       notification.event_title.should eq("Some Big Event")
     end
   end
 
-  describe "callout" do
-    #TODO This test may need to be moved to the message tests
-    #let(:notification) { Notification.new(subject: 'Test Callout', channels: ["email", "sms"]) }
-#    let(:source_account)      { double :source_account, :decrease => nil }
- #   let(:destination_account) { double :destination_account, :increase => nil }
-    #
-    let(:notification) { double :notification, :subject => 'Testing Callout',
+  describe "notify" do
+    let(:notification) { FactoryGirl.build( :notification, :subject => 'Testing Callout',
                                                :channels => ["email", "sms"],
-                                               :body => "This is the body"}
-    let(:reciepient) { double :person, :email => ["jdoe@example.com"]}
-    let(:mail) { MessageMailer.callout(notification, reciepient.email) }
-
-    it "renders the headers" do
-      mail.subject.should eq("Testing Callout")
-      mail.to.should eq(["jdoe@example.com"])
-      mail.from.should eq(["records@billericaema.org"])
+                                               :body => "This is the body") }
+    let(:receipient) { double :person }
+    let(:event) { FactoryGirl.build(:event) }
+    it "collects the correct people to notify" do
+      notification.should_receive(:groups).and_return('Available')
+      notification.should_receive(:event).and_return(event)
+      event.should_receive(:roster).with('Available').and_return(["recipient"])
+      notification.notify
+    end
+    it "calls the mailer for email channels" do
+      pending "This is too complicated"
+      event.should_receive(:scheduled_people).and_return([receipient])
+      receipient.should_receive(:email).and_return(['jdoe@example.com','john@example.com'])
+      MessageMailer.any_instance.should_receive(:callout)
+      notification.should_receive(:event).and_return(event)
+      notification.notify
     end
   end
 end

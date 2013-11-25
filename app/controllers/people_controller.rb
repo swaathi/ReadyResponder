@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_filter :authenticate_user!
   before_filter :set_return_path
   load_and_authorize_resource
-  
+
   def signin
     #This is the sign-in sheet, not anything about authentication
     @people = Person.active.all
@@ -117,7 +117,7 @@ class PeopleController < ApplicationController
 
   def update
     @person = Person.find(params[:id])
-    
+
     respond_to do |format|
       if @person.update_attributes(params[:person])
         format.html { redirect_to session[:return_to], notice: 'Person was successfully updated.' }

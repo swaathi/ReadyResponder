@@ -34,20 +34,16 @@ class Event < ActiveRecord::Base
   CATEGORY_CHOICES = ['Training', 'Patrol', 'Meeting', 'Admin', 'Event']
 
   def to_s
-    description
+    title
   end
-
+  def roster(group)
+    self.timecards.send(group.downcase).map { |tc| tc.person }
+  end
   def manhours
     self.timecards.sum('actual_duration')
   end
-  def unknown_people 
+  def create_timecards_for_unknown_people
     Person.order('title_order').active - self.people
-  end
-  def available_people
-    self.timecards.available
-  end
-  def scheduled_people
-    self.timecards.scheduled
   end
 
   def completed?

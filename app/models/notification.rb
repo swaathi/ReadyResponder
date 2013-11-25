@@ -1,9 +1,5 @@
 class Notification < ActiveRecord::Base
-  # Notifications needs to decide who to contact and how. 
-  # I think a message will be an single message to a single person
-  # The message will be expected to find the address to send to
-  #
-  attr_accessible :author_id, :body, :channels, :comments, :event_id, :sent_at, :status, :subject
+  attr_accessible :author_id, :body, :channels, :comments, :event, :event_id, :sent_at, :status, :subject
 
   CHANNELS= ['email']
   validates_presence_of :channels
@@ -11,32 +7,22 @@ class Notification < ActiveRecord::Base
   has_many :messages
   has_many :people, :through => :messages
 
-  def notify(notification)
-    event = notification.event
+  def notify
+    event = self.event
     recipient = event.scheduled_people.first
+    self.event_groups.each { |event_group| recipients << event.send(event_group) }
 
-    if notification.channels.include? "SMS" then
-      delivery_addresses = recipient.sms_address(notification.priority)
-      delivery_addresses.each do |delivery_address|
-        notify_via_sms(notification, delivery_address)
+    if self.channels.include? "email"
+      recipient.email.each do |email_address|
+        MessageMailer.callout(self, recipient, email_address.content).deliver
       end
     end
   end
 
-  def notify_via_sms(notification, recipients)
-    MessageMailer.callout(notification, recipient_address).deliver
-
-  end
-
-  def event
-    return Event.new if event_id.blank?
-    super
-  end
-
   def event_title
-    return "No Event" if event.blank?
-    return "Unknown" if event.title.blank?
-    event.title
+    event.title unless event.blank?
   end
-
+  def event_groups
+    ['Available','Unknown']
+  end
 end

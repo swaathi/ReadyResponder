@@ -1,9 +1,9 @@
 class Timecard < ActiveRecord::Base
   before_save :pull_defaults_from_event
   before_save :calc_durations
-  attr_accessible :intention, :intended_start_time, :intended_end_time, 
+  attr_accessible :intention, :intended_start_time, :intended_end_time,
                   :outcome, :actual_start_time, :actual_end_time, :event_id, :person_id, :category, :description
-  
+
   belongs_to :person
   belongs_to :event
 
@@ -32,20 +32,19 @@ class Timecard < ActiveRecord::Base
   validate :actual_end_date_cannot_be_before_actual_start
   #validate :has_no_duplicate_timecard
 
-  def self.available
-    where(intention: "Available", outcome:['', nil])
-  end
-  def self.scheduled
-    #Postgres distinguishes between null and an empty string, others do not
-    where(intention: "Scheduled", outcome:['', nil])
-  end
-  def self.unavailable
-    where(outcome: "Unavailable")
-  end
+  # Postgres distinguishes between null and an empty string, others do not
+  # I think I want to turn all these scopes into one, and pass in the intention
+  # However, this may not work, since I sometimes need to use intention and outcome
+  scope :unknown, ->     { where(intention: "Unknown") }
+  scope :available, ->   { where(intention: "Available", outcome:['', nil]) }
+  scope :scheduled, ->   { where(intention: "Scheduled", outcome:['', nil]) }
+  scope :unavailable, -> { where(intention: "Unavailable") }
+  scope :howdy, -> { where(intention: 'Howdy') }
+
   def self.working
-    where(outcome: "Worked", actual_end_time: nil)
+    where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].eq(nil))
   end
-  def self.worked
+  def worked
     where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].not_eq(nil))
   end
 
@@ -89,7 +88,7 @@ private
       self.actual_end_time = event.end_time if self.actual_end_time.nil?
     end
   end
-  
+
   def calc_durations
     if intended_start_time.blank? or intended_end_time.blank?
       self.intended_duration = 0

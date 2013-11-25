@@ -2,8 +2,8 @@ class NotificationsController < ApplicationController
   # POST notification/:id/notify
   def notify
     @notification = Notification.find(params[:id])
-    @recipient = Person.first
-    MessageMailer.callout(@notification, @recipient).deliver
+    @notification.notify
+    render :template => "notifications/show"
   end
 
   def index
@@ -28,9 +28,7 @@ class NotificationsController < ApplicationController
   def new
     @notification = Notification.new
     @notification.status = 'New'
-    @notification.event_id = params[:event_id]
-    @event = @notification.event
-
+    @event = Event.find(params[:event_id])
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notification }

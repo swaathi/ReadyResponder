@@ -1,16 +1,17 @@
 class MessageMailer < ActionMailer::Base
-  default from: "records@billericaema.org"
+  default from: "callout@billericaema.org"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
   #   en.message_mailer.callout.subject
   #
-  def callout(message, recipient_address)
-    @message = message
+  def callout(notification, recipient, mailing_address)
+    @message = notification
+    @recipient = recipient
 
-    mail to: recipient_address, subject: message.subject
-
+    mail to: mailing_address,
+         subject: notification.subject
   end
 
   # I should also define a 'we miss you' mailer, 
