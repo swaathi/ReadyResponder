@@ -1,5 +1,5 @@
 <div class="accordion">
-  <h3>Worked (<%= @event.timecards.worked.count %>) <%#= @event.manhours %> </h3>
+  <h3>Worked (<%= @event.roster('worked').count %>) <%#= @event.manhours %> </h3>
   <div>
     <table id="worked" class="table table-striped table-bordered">
       <thead>
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @event.timecards.worked.each do |timecard| %>
+        <% @event.timecards_which_are('worked').each do |timecard| %>
           <tr>
             <td><%= link_to timecard.person.fullname, timecard %></td>
             <td><%= timecard.description %></td>

@@ -9,12 +9,14 @@ class Notification < ActiveRecord::Base
 
   def notify
     event = self.event
-    recipient = event.scheduled_people.first
-    self.event_groups.each { |event_group| recipients << event.send(event_group) }
+    self.event_groups.each do |event_group|
+      event.roster(event_group).each do |recipient|
 
-    if self.channels.include? "email"
-      recipient.email.each do |email_address|
-        MessageMailer.callout(self, recipient, email_address.content).deliver
+        if self.channels.include? "email"
+          recipient.email.each do |email_address|
+            MessageMailer.callout(self, recipient, email_address.content).deliver
+          end
+        end
       end
     end
   end

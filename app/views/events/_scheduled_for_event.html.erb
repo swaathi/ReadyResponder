@@ -1,5 +1,5 @@
 <div class="accordion">
-  <h3 id="scheduled-heading" >Scheduled (<%= @event.timecards.scheduled.count %>) <%#= @event.manhours %> </h3>
+  <h3 id="scheduled-heading" >Scheduled (<%= @event.roster('scheduled').count %>) <%#= @event.manhours %> </h3>
   <div>
     <table id="scheduled" class="table table-striped table-bordered">
       <thead>
@@ -13,7 +13,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @event.scheduled_people.each do |timecard| %>
+        <% @event.timecards_which_are('scheduled').each do |timecard| %>
           <tr>
             <td><%= link_to timecard.person.fullname, timecard %></td>
             <td><%= timecard.description %></td>

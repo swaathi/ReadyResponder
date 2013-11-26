@@ -11,7 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @event.timecards.unavailable.each do |timecard| %>
+        <% @event.timecards_which_are('unavailable').each do |timecard| %>
           <tr>
             <td><%= link_to timecard.person.fullname, timecard %></td>
             <td><%= timecard.description %></td>

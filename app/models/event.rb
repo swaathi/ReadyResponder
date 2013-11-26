@@ -39,6 +39,9 @@ class Event < ActiveRecord::Base
   def roster(group)
     self.timecards.send(group.downcase).map { |tc| tc.person }
   end
+  def timecards_which_are(group)
+    self.timecards.send(group.downcase)
+  end
   def manhours
     self.timecards.sum('actual_duration')
   end

@@ -39,13 +39,12 @@ class Timecard < ActiveRecord::Base
   scope :available, ->   { where(intention: "Available", outcome:['', nil]) }
   scope :scheduled, ->   { where(intention: "Scheduled", outcome:['', nil]) }
   scope :unavailable, -> { where(intention: "Unavailable") }
+  scope :worked, -> { where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].not_eq(nil)) }
+
   scope :howdy, -> { where(intention: 'Howdy') }
 
   def self.working
     where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].eq(nil))
-  end
-  def worked
-    where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].not_eq(nil))
   end
 
 def find_duplicate_timecards
