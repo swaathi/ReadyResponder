@@ -188,7 +188,9 @@ describe "Person" do
     end
 
     it "a person page" do
-      @timecard = FactoryGirl.create(:timecard) #this creates a person as well
+      event = FactoryGirl.create(:event)
+      person = FactoryGirl.create(:person)
+      @timecard = FactoryGirl.create(:timecard, event: event, person: person)
       @person = @timecard.person
       @certification = FactoryGirl.create(:cert, person: @person)
       visit person_path(@person)
@@ -200,7 +202,7 @@ describe "Person" do
       visit person_path(person)
       page.should have_content("Status")
     end
-    
+
     pending "all certs, even expired" do
       person = FactoryGirl.create(:person)
       course = FactoryGirl.create(:course, name: "Basket Weaving")

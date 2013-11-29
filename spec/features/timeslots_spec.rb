@@ -2,11 +2,14 @@ require 'spec_helper'
 #save_and_open_page
 describe 'Access on timecard' do
   it "gets denied" do
+    @event =  FactoryGirl.create(:event)
+    @person = FactoryGirl.create(:person)
+
     visit timecards_path
     page.should have_content("You need to sign in")
     visit new_timecard_path
     page.should have_content("You need to sign in")
-    @sample_object = FactoryGirl.create(:timecard)
+    @sample_object = FactoryGirl.create(:timecard, event: @event, person: @person)
     visit url_for(@sample_object)
     page.should have_content("You need to sign in")
   end
@@ -21,10 +24,12 @@ describe Timecard do
     fill_in 'user_email', :with => somebody.email
     fill_in 'user_password', :with => somebody.password
     click_on 'Sign in'
+    @event =  FactoryGirl.create(:event)
+    @person = FactoryGirl.create(:person)
   end
 
   it "gets the index" do
-    @sample_object = FactoryGirl.create(:timecard)
+    @sample_object = FactoryGirl.create(:timecard, event: @event, person: @person)
     visit timecards_path
     page.should have_content("LIMS") # In the nav bar
     page.should have_css('#sidebar')
@@ -32,7 +37,7 @@ describe Timecard do
     page.should have_content(@sample_object.category)
   end
   it "visits a creation form" do
-    @sample_object = FactoryGirl.create(:timecard)
+    @sample_object = FactoryGirl.create(:timecard, event: @event, person: @person)
     visit new_timecard_path
     page.should have_content("LIMS")
     page.should have_css('#sidebar')
@@ -40,7 +45,7 @@ describe Timecard do
     page.should have_content("New Timecard")
   end
   it "visits a display page" do
-    @sample_object = FactoryGirl.create(:timecard)
+    @sample_object = FactoryGirl.create(:timecard, event: @event, person: @person)
     visit timecard_path(@sample_object)
     page.should have_content("LIMS")
     page.should have_css('#sidebar')
@@ -48,7 +53,9 @@ describe Timecard do
     page.should have_content(@sample_object.intention)
   end
   it "visits a display page without actual times" do
-    @sample_object = FactoryGirl.create(:timecard, intended_start_time: nil, intended_end_time: nil, actual_start_time: nil, actual_end_time: nil)
+    @sample_object = FactoryGirl.create(:timecard, event: @event, person: @person,
+                                        intended_start_time: nil, intended_end_time: nil,
+                                        actual_start_time: nil, actual_end_time: nil)
     visit timecard_path(@sample_object)
     page.should have_content("LIMS")
     page.should have_css('#sidebar')
