@@ -26,7 +26,7 @@ describe Notification do
     let(:receipient2) { FactoryGirl.build(:person) }
     let(:event) { FactoryGirl.build(:event) }
     it "collects the correct people to notify" do
-      notification.should_receive(:event_groups).and_return(['Available', 'Unknown'])
+      notification.should_receive(:recipient_groups).and_return(['Available', 'Unknown'])
       notification.should_receive(:event).and_return(event)
       event.should_receive(:roster).with('Available').and_return([receipient1])
       event.should_receive(:roster).with('Unknown').and_return([receipient2])

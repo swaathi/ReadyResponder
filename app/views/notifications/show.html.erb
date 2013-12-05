@@ -1,11 +1,11 @@
 <% content_for :sidebar do %>
   <%= link_to 'Return to Event', event_path(@event), :class => 'btn' %></br></br>
+  <%= link_to("Send It !", notify_path(@notification ), method: :Post, :class => 'btn btn-mini') %>
 <% end %>
 
 
 <p id="notice"><%= notice %></p>
 
-<%= link_to("Send It !", notify_path(@notification ), method: :Post, :class => 'btn btn-mini') %>
 <p>
   <b>Event:</b>
   <%= @notification.event_title %>
@@ -27,6 +27,12 @@
 </p>
 
 <p>
+  <b>Groups:</b>
+  <%= @notification.recipient_groups %>
+</p>
+
+
+<p>
   <b>Subject:</b>
   <%= @notification.subject %>
 </p>
@@ -46,6 +52,3 @@
   <%= @notification.comments %>
 </p>
 
-
-<%= link_to 'Edit', edit_notification_path(@notification) %> |
-<%= link_to 'Back', notifications_path %>

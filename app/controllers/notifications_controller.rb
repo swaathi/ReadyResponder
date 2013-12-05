@@ -2,8 +2,10 @@ class NotificationsController < ApplicationController
   # POST notification/:id/notify
   def notify
     @notification = Notification.find(params[:id])
-    @recipient = Person.first
-    MessageMailer.callout(@notification, @recipient).deliver
+    @event = @notification.event
+
+    @notification.notify
+    redirect_to notification_url(@notification)
   end
 
   def index

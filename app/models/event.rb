@@ -36,7 +36,7 @@ class Event < ActiveRecord::Base
   def to_s
     title
   end
-  def roster(group)
+  def roster(group)  # This returns people
     self.timecards.send(group.downcase).map { |tc| tc.person }
   end
   def timecards_which_are(group)
