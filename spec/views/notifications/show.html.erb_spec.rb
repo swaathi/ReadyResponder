@@ -11,6 +11,10 @@ describe "notifications/show" do
       :body => "Body",
       :comments => "MyText"
     ))
+    @event = assign(:event, stub_model(Event,
+      :id => 1,
+      :title => 'A Big Event'
+    ))
   end
 
   it "renders attributes in <p>" do

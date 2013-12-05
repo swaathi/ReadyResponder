@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Events" do
+describe Event do
   before (:each)  do
     somebody = FactoryGirl.create(:user)
     r = FactoryGirl.create(:role, name: 'Editor')
@@ -11,7 +11,7 @@ describe "Events" do
     click_on 'Sign in'
   end
 
-  describe Event do
+  describe 'forms' do
     let(:event)   { FactoryGirl.create(:event)}
     let(:person1) { FactoryGirl.create(:person)}
     let(:person2) { FactoryGirl.create(:person)}
@@ -99,9 +99,12 @@ describe "Events" do
     end
   end
   describe "displays" do
+    let(:notification) {FactoryGirl.create(:notification)}
+    let(:event) {FactoryGirl.create(:event) }
     it "a listing" do
       @event = FactoryGirl.create(:event, end_time: nil, title: "Something divine")
       visit events_path
+
       within_table("events") do
         page.should have_content("Events")
       	within("tbody") do
@@ -126,6 +129,9 @@ describe "Events" do
       end
       page.should have_content(@event.title)
       current_path.should == event_path(@event)
+    end
+    it 'shows notifications on the event page' do
+
     end
     it "hides the course if category isn't training" , js: true do
       visit new_event_path

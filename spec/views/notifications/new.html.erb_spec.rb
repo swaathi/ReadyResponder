@@ -11,6 +11,10 @@ describe "notifications/new" do
       :body => "MyString",
       :comments => "MyText"
     ).as_new_record)
+    @event = assign(:event, stub_model(Event,
+      :id => 1,
+      :title => 'A Big Event'
+    ))
   end
 
   it "renders new notification form" do

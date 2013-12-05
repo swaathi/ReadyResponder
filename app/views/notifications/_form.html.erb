@@ -2,8 +2,9 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.association :event %>
+    <%#= @event.title %>
     <div class="status"><%= @notification.status %></div>
+    <%= f.association :event %>
     <%= f.input :channels, :as => :select, :collection => Notification::CHANNELS %>
     <%= f.input :subject %>
     <%= f.input :body %>

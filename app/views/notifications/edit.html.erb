@@ -1,6 +1,9 @@
+<% content_for :sidebar do %>
+  <%= link_to 'Cancel', notifications_path, :class => 'btn' %></br></br>
+<% end %>
+
+
 <h1>Editing notification</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Show', @notification %> |
-<%= link_to 'Back', notifications_path %>

@@ -1,5 +1,9 @@
+<% content_for :sidebar do %>
+  <%= link_to 'Return to Event', event_path(@event), :class => 'btn' %></br></br>
+<% end %>
+
+
 <p id="notice"><%= notice %></p>
-<%#= link_to notify_path(@notification)  %>
 
 <%= link_to("Send It !", notify_path(@notification ), method: :Post, :class => 'btn btn-mini') %>
 <p>

@@ -2,8 +2,8 @@ class NotificationsController < ApplicationController
   # POST notification/:id/notify
   def notify
     @notification = Notification.find(params[:id])
-    @notification.notify
-    render :template => "notifications/show"
+    @recipient = Person.first
+    MessageMailer.callout(@notification, @recipient).deliver
   end
 
   def index
@@ -41,10 +41,12 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new(params[:notification])
-
+    # This explicit call to notification.event will be a problem
+    # once notifications are poly-morphic
+    @event = @notification.event
     respond_to do |format|
       if @notification.save
-        format.html { redirect_to @notification, notice: 'Notification was successfully created.' }
+        format.html { redirect_to @event, notice: 'Notification was successfully created.' }
         format.json { render json: @notification, status: :created, location: @notification }
       else
         format.html { render action: "new" }
