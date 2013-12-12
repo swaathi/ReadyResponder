@@ -1,37 +1,24 @@
-<h1>Listing notifications</h1>
-
-<table>
-  <tr>
-    <th>Event</th>
-    <th>Author</th>
-    <th>Status</th>
-    <th>Channels</th>
-    <th>Subject</th>
-    <th>Body</th>
-    <th>Sent at</th>
-    <th>Comments</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @notifications.each do |notification| %>
-  <tr>
-    <td><%= notification.event_id %></td>
-    <td><%= notification.author_id %></td>
-    <td><%= notification.status %></td>
-    <td><%= notification.channels %></td>
-    <td><%= notification.subject %></td>
-    <td><%= notification.body %></td>
-    <td><%= notification.sent_at %></td>
-    <td><%= notification.comments %></td>
-    <td><%= link_to 'Show', notification %></td>
-    <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
-    <td><%= link_to 'Destroy', notification, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+<table id="notifications" class="datatable display table table-striped table-bordered" >
+  <caption><h3><%= 'Notifications' %></h3></caption>
+  <thead>
+    <tr>
+      <th>Subject</th>
+      <th>Status</th>
+      <th>Channels</th>
+      <th>Sent at</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @notifications.each do |notification| %>
+    <tr>
+      <td><%= link_to(notification.subject,  notification) %></td>
+      <td><%= notification.status %></td>
+      <td><%= notification.channels %></td>
+      <td><%= notification.sent_at %></td>
+      <td><%= link_to 'Edit', edit_notification_path(notification) %></td>
+    </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<br />
-
-<%= link_to 'New Notification', new_notification_path %>

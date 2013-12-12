@@ -20,7 +20,7 @@
 
 <p> <b>Status:</b>  <%= @event.status %></p>
 <div id="event_notifications" >
-  
+  <%= render "notifications_for_event" %>
 </div>
 <div id="event_timecards" >
   <%= render "unknown_for_event" %>

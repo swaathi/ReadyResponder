@@ -9,7 +9,12 @@ class NotificationsController < ApplicationController
   end
 
   def index
-    @notifications = Notification.all
+    if params[:event_id]
+      @event = Event.find(params[:event_id])
+      @notifications = @event.notifications
+    else
+      @notifications = Notification.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

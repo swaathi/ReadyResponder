@@ -16,6 +16,7 @@ describe Notification do
     let!(:event) { FactoryGirl.create(:event)}
 
     it "creates" do
+      Notification.all.count.should eq(0)
       visit new_event_notification_path(event)
       select 'email', :from => 'notification_channels'
       fill_in "Subject", with: "Pay Attention"
@@ -23,12 +24,22 @@ describe Notification do
       fill_in 'Comments', with: "These are comments"
       click_on 'Create'
       page.should have_content "Notification was successfully created."
+      Notification.all.count.should eq(1)
     end
   end
   describe "displays" do
     let(:event) { FactoryGirl.create(:event)}
-    let(:notification)   { FactoryGirl.create(:notification, event: event)}
+    let(:second_event) { FactoryGirl.create(:event)}
 
+    let(:notification)   { FactoryGirl.create(:notification, event: event)}
+    let(:second_notification)   { FactoryGirl.create(:notification)}
+    let(:third_notification)   { FactoryGirl.create(:notification, event: event)}
+
+    it 'an index page' do
+      second_notification.stub(:event).and_return(second_event)
+      visit notifications_path
+      page.should have_content('Notifications')
+    end
     it 'an edit form' do
       notification.stub(:event).and_return(event)
       visit edit_notification_path(notification)

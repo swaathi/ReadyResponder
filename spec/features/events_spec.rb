@@ -30,6 +30,7 @@ describe Event do
       click_on 'Create'
       page.should have_content "Event was successfully created."
     end
+
     it "has the right timecards" do
       event.timecards.count.should eq(0)
       person2.should_not be_nil
@@ -99,8 +100,9 @@ describe Event do
     end
   end
   describe "displays" do
-    let(:notification) {FactoryGirl.create(:notification)}
-    let(:event) {FactoryGirl.create(:event) }
+    let!(:event) {FactoryGirl.create(:event) }
+    let(:notification) {FactoryGirl.create(:notification, event: event)}
+
     it "a listing" do
       @event = FactoryGirl.create(:event, end_time: nil, title: "Something divine")
       visit events_path
@@ -122,16 +124,21 @@ describe Event do
     end
 
     it "an event page" do
-      @event = FactoryGirl.create(:event, end_time: nil)
-      visit event_path(@event)
+      visit event_path(event)
       within('#sidebar') do
         page.should have_content "Return to"
       end
-      page.should have_content(@event.title)
-      current_path.should == event_path(@event)
+      page.should have_content(event.title)
+      current_path.should == event_path(event)
     end
     it 'shows notifications on the event page' do
-
+      notification.event.should eq(event) # Needed to fire lazy loading
+      visit event_path(event)
+      within("#event_notifications") do
+        page.should have_content(notification.subject)
+        click_on notification.subject
+        current_path.should == notification_path(notification)
+      end
     end
     it "hides the course if category isn't training" , js: true do
       visit new_event_path

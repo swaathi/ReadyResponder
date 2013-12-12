@@ -1,0 +1,30 @@
+<div class="accordion">
+  <h3>Notifications (<%= @event.notifications.count %>) </h3>
+  <div>
+    <table id="notifications" class="table table-striped table-bordered">
+      <caption><%= 'New Notification' %></caption>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Subject</th>
+          <th>Sent At</th>
+          <th>Recipients</th>
+          <th>Responses</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @event.notifications.each do |notification| %>
+          <tr>
+            <td><%= notification.status %></td>
+            <td><%= link_to notification.subject, notification %></td>
+            <td><%= notification.sent_at %></td>
+            <td><%= notification.people.count %></td>
+            <td><%= '(N/A)'  %></td>
+            <td><%= 'Future Button'+ notification.event_id.to_s %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

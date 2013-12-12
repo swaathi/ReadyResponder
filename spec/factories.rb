@@ -3,8 +3,8 @@ FactoryGirl.define do
     sequence (:username) {|n| "test#{n}" }
     sequence (:email) {|n| "test#{n}@example.com" }
     confirmed_at Time.now
-    password 'secret'
-    password_confirmation 'secret'
+    password 'sekrit'
+    password_confirmation 'sekrit'
     firstname "CJ"
     lastname "Doe"
   end
