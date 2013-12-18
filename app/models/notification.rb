@@ -1,13 +1,27 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :author_id, :body, :channels, :comments, :event, :event_id, :sent_at, :status, :subject
+  attr_accessible :author_id, :body, :channels, :send_trigger, :comments, :event, :event_id, :sent_at, :status, :subject
 
   CHANNELS= ['email']
-  STATUSES= ['new', 'scheduled', 'Sending', 'Complete']
+  STATUSES= ['New', 'Not Sent', 'Scheduled', 'Sending', 'Complete']
+  SEND_TRIGGERS= [ 'Manual-Now' , 'Manual-Later']
+  # Could use a schedule to send a notification, in a later revision
+  # Could also use a code block as a trigger, in a later revision
 
-  validates_presence_of :channels
+  validates_presence_of :channels, :send_trigger
   belongs_to :event
   has_many :messages
   has_many :people, :through => :messages
+
+  def initialize(attributes = {})
+    super
+    self.channels = ['email']
+    self.status = 'New'
+    self.send_trigger = 'Manual-Now'
+  end
+
+  def set_status
+
+  end
 
   def notify
     self.update_attributes(status: 'Working')

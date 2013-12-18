@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :notification do
     status "New"
+    send_trigger 'Manual-Later'
     channels "email"
     sequence (:subject) {|n| "Notification Subject#{n}" }
     body "You should know this"

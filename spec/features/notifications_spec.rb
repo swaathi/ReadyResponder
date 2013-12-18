@@ -16,7 +16,6 @@ describe Notification do
     let!(:event) { FactoryGirl.create(:event)}
 
     it "creates" do
-      Notification.all.count.should eq(0)
       visit new_event_notification_path(event)
       select 'email', :from => 'notification_channels'
       fill_in "Subject", with: "Pay Attention"
@@ -24,7 +23,6 @@ describe Notification do
       fill_in 'Comments', with: "These are comments"
       click_on 'Create'
       page.should have_content "Notification was successfully created."
-      Notification.all.count.should eq(1)
     end
   end
   describe "displays" do
@@ -46,6 +44,7 @@ describe Notification do
       within("#sidebar") do
         page.should have_content("Cancel")
       end
+      page.should have_content(notification.send_trigger)
     end
 
     it "a show page" do

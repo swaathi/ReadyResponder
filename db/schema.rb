@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131121025119) do
+ActiveRecord::Schema.define(:version => 20131212225613) do
 
   create_table "activities", :force => true do |t|
     t.string   "content"
@@ -201,10 +201,11 @@ ActiveRecord::Schema.define(:version => 20131121025119) do
     t.string   "body"
     t.datetime "sent_at"
     t.text     "comments"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "priority"
     t.string   "event_group"
+    t.string   "send_trigger"
   end
 
   create_table "people", :force => true do |t|

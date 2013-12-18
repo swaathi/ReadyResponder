@@ -33,9 +33,8 @@ class NotificationsController < ApplicationController
   end
 
   def new
-    @notification = Notification.new
-    @notification.status = 'New'
     @event = Event.find(params[:event_id])
+    @notification = Notification.new(:event => @event)
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notification }
