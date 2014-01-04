@@ -24,6 +24,9 @@ class Notification < ActiveRecord::Base
     self.send_trigger = 'Manual-Now'
   end
 
+  def author
+    Person.find(self.author_id)
+  end
   def expiration_date
   # Pending on this feature. This will tell the notifiation when to quit
   #  date = DateTime.parse("2001-08-01 08:00:00")
