@@ -7,12 +7,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <h3><%= link_to @notification.event_title, @event %></h3>
+  <h3>Notification for <%= link_to @notification.event_title, @event %></h3>
 </p>
 
 <p>
   <b>Author:</b>
-  <%= @notification.author_id %>
+  <%= @notification.author %>
 </p>
 
 <p>
@@ -34,6 +34,8 @@
 </p>
 
 
+<%= render "recipients_for_notification" %>
+<%= render "responses_for_notification" %>
 <p>
   <b>Subject:</b>
   <%= @notification.subject %>

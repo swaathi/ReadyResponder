@@ -1,0 +1,13 @@
+<%= simple_form_for(@recipient) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :person_id %>
+    <%= f.input :notification_id %>
+    <%= f.input :uuid %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

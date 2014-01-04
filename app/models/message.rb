@@ -1,8 +1,9 @@
 class Message < ActiveRecord::Base
-  attr_accessible :channel, :content, :notification_id, :person_id, :processed_at, :processed_by, :slug, :status
+  attr_accessible :channel, :content, :recipient_id, :processed_at, :processed_by, :slug, :status
 
-  belongs_to :notifications
-  belongs_to :person
+  belongs_to :recipient
+  has_one :person, :through => :recipient
+  has_one :notification, :through => :recipient
 
   def recipient_email
     person.email

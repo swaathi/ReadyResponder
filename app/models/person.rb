@@ -11,8 +11,11 @@ class Person < ActiveRecord::Base
 
   has_many :channels
   accepts_nested_attributes_for :channels, allow_destroy: true
-  has_many :messages
-  has_many :notifications, :through => :messages
+  has_many :recipients
+  has_many :notifications, :through => :recipients
+  has_many :responses, :through => :recipients
+  has_many :messages, :through => :recipients
+
   has_many :courses, :through => :certs
   has_many :skills, :through => :courses
   has_and_belongs_to_many :titles

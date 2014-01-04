@@ -1,0 +1,27 @@
+<h1>Listing recipients</h1>
+
+<table>
+  <tr>
+    <th>Person</th>
+    <th>Notification</th>
+    <th>Uuid</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @recipients.each do |recipient| %>
+  <tr>
+    <td><%= recipient.person_id %></td>
+    <td><%= recipient.notification_id %></td>
+    <td><%= recipient.uuid %></td>
+    <td><%= link_to 'Show', recipient %></td>
+    <td><%= link_to 'Edit', edit_recipient_path(recipient) %></td>
+    <td><%= link_to 'Destroy', recipient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Recipient', new_recipient_path %>

@@ -1,0 +1,35 @@
+<h1>Listing responses</h1>
+
+<table>
+  <tr>
+    <th>Recipient</th>
+    <th>Intention</th>
+    <th>Eta</th>
+    <th>Etd</th>
+    <th>Duration</th>
+    <th>Duration</th>
+    <th>Channel</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @responses.each do |response| %>
+  <tr>
+    <td><%= response.recipient_id %></td>
+    <td><%= response.intention %></td>
+    <td><%= response.eta %></td>
+    <td><%= response.etd %></td>
+    <td><%= response.duration %></td>
+    <td><%= response.duration %></td>
+    <td><%= response.channel %></td>
+    <td><%= link_to 'Show', response %></td>
+    <td><%= link_to 'Edit', edit_response_path(response) %></td>
+    <td><%= link_to 'Destroy', response, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Response', new_response_path %>

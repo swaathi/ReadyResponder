@@ -33,6 +33,14 @@ describe Notification do
     let(:second_notification)   { FactoryGirl.create(:notification)}
     let(:third_notification)   { FactoryGirl.create(:notification, event: event)}
 
+    it 'recipients as a division' do
+      visit event_notification_path(event, notification)
+      within('#notification_recipients') do
+        page.should have_content "Sheldon"
+      end
+ 
+    end
+
     it 'an index page' do
       second_notification.stub(:event).and_return(second_event)
       visit notifications_path
@@ -55,6 +63,7 @@ describe Notification do
       page.should have_content(event.title)
       current_path.should == event_notification_path(event, notification)
     end
+
     it "hides the course if category isn't training" , js: true do
       visit new_event_path
       select 'Patrol', :from => 'event_category'

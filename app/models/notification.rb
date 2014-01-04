@@ -6,17 +6,28 @@ class Notification < ActiveRecord::Base
   SEND_TRIGGERS= [ 'Manual-Now' , 'Manual-Later']
   # Could use a schedule to send a notification, in a later revision
   # Could also use a code block as a trigger, in a later revision
+  # Code block would be useful for certification expiration
 
   validates_presence_of :channels, :send_trigger
   belongs_to :event
-  has_many :messages
-  has_many :people, :through => :messages
+  # The data model will need to change to accomadate receipients
+  # separate from the message.
+  has_many :recipients
+  has_many :messages, :through => :recipients
+  has_many :people, :through => :recipients
+  has_many :responses, :through => :recipients
 
   def initialize(attributes = {})
     super
     self.channels = ['email']
     self.status = 'New'
     self.send_trigger = 'Manual-Now'
+  end
+
+  def expiration_date
+  # Pending on this feature. This will tell the notifiation when to quit
+  #  date = DateTime.parse("2001-08-01 08:00:00")
+  #  Time.now
   end
 
   def set_status

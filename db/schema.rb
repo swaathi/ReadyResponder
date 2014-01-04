@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131212225613) do
+ActiveRecord::Schema.define(:version => 20140104184131) do
 
   create_table "activities", :force => true do |t|
     t.string   "content"
@@ -165,16 +165,15 @@ ActiveRecord::Schema.define(:version => 20131212225613) do
   end
 
   create_table "messages", :force => true do |t|
-    t.integer  "notification_id"
-    t.integer  "person_id"
+    t.integer  "recipient_id"
     t.string   "status"
     t.string   "channel"
     t.string   "content"
     t.datetime "processed_at"
     t.string   "processed_by"
     t.string   "slug"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "messages_people", :id => false, :force => true do |t|
@@ -206,6 +205,7 @@ ActiveRecord::Schema.define(:version => 20131212225613) do
     t.string   "priority"
     t.string   "event_group"
     t.string   "send_trigger"
+    t.integer  "ttl"
   end
 
   create_table "people", :force => true do |t|
@@ -259,6 +259,15 @@ ActiveRecord::Schema.define(:version => 20131212225613) do
 
   add_index "people_titles", ["person_id", "title_id"], :name => "index_people_titles_on_person_id_and_title_id"
 
+  create_table "recipients", :force => true do |t|
+    t.integer  "person_id"
+    t.integer  "notification_id"
+    t.string   "uuid"
+    t.string   "status"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
   create_table "repairs", :force => true do |t|
     t.integer  "item_id"
     t.integer  "user_id"
@@ -273,16 +282,14 @@ ActiveRecord::Schema.define(:version => 20131212225613) do
   end
 
   create_table "responses", :force => true do |t|
-    t.integer  "message_id"
-    t.integer  "person_id"
-    t.string   "status"
-    t.string   "response"
-    t.string   "reason"
-    t.string   "source"
-    t.string   "raw_data"
-    t.string   "action_taken"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "recipient_id"
+    t.string   "intention"
+    t.datetime "eta"
+    t.datetime "etd"
+    t.decimal  "duration",     :precision => 5, :scale => 2
+    t.string   "channel"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "roles", :force => true do |t|

@@ -8,7 +8,8 @@ describe Notification do
     it "has working validation" do
      # The notification initializer creates all the necessary bits
      # so it has become harder to set this test up.
-     #notification.should_not be_valid
+     notification.channels = nil
+     notification.should_not be_valid
     end
   end
 
@@ -18,6 +19,12 @@ describe Notification do
     it "shows the name" do
       notification.stub(:event).and_return(event)
       notification.event_title.should eq("Some Big Event")
+    end
+    it "displays the expiration time" do
+      pending "Waiting to implement re-tries"
+      notification.ttl = 8
+      notification.sent_at = "8/2/2001 0300"
+      expect(notification.expiration_date).to eq("8/2/2001 1100")
     end
   end
 

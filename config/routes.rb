@@ -1,4 +1,10 @@
 Lims3::Application.routes.draw do
+  resources :responses
+
+
+  resources :recipients
+
+
   resources :notifications
   post 'notifications/:id/notify', to: 'notifications#notify', as: 'notify'
 

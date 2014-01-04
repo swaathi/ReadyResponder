@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Recipient:</b>
+  <%= @response.recipient_id %>
+</p>
+
+<p>
+  <b>Intention:</b>
+  <%= @response.intention %>
+</p>
+
+<p>
+  <b>Eta:</b>
+  <%= @response.eta %>
+</p>
+
+<p>
+  <b>Etd:</b>
+  <%= @response.etd %>
+</p>
+
+<p>
+  <b>Duration:</b>
+  <%= @response.duration %>
+</p>
+
+<p>
+  <b>Duration:</b>
+  <%= @response.duration %>
+</p>
+
+<p>
+  <b>Channel:</b>
+  <%= @response.channel %>
+</p>
+
+
+<%= link_to 'Edit', edit_response_path(@response) %> |
+<%= link_to 'Back', responses_path %>
