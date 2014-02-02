@@ -1,9 +1,8 @@
-<% content_for :sidebar do %>
-  <%= link_to 'Return to Events', events_path, :class => 'btn btn-mini' %></br></br>
-  <%= link_to 'Edit Event', edit_event_path(@event), :class => 'btn btn-mini' if can? :edit, @event  %></br></br>
-  <%= link_to "Excel", event_path(@event, format: "xlsx"), :class => 'btn btn-mini'  %></br></br>
-  <%= link_to "Create Notification", new_event_notification_path(@event), :class => 'btn btn-mini' %>
- <% end %>
+<% content_for :submenu do %>
+  <li><%= link_to 'Edit Event', edit_event_path(@event) if can? :edit, @event  %></li>
+  <li><%= link_to "Export", event_path(@event, format: "xlsx") %></li>
+  <li><%= link_to "Create Notification", new_event_notification_path(@event) %></li>
+<% end %>
 
 <h3><%= @event.title %></h3>
 <p><b>Location:</b> <%= @event.location %></p>
@@ -22,7 +21,9 @@
 <div id="event_notifications" >
   <%= render "notifications_for_event" %>
 </div>
-<div id="event_timecards" >
+<div id="event_timecards"  >
+  <h3>Personnel</h3>
+  <div>
   <%= render "unknown_for_event" %>
   <%= render "unavailable_for_event" %>
   <%= render "available_for_event" %>
@@ -30,7 +31,7 @@
   <%= render "working_for_event" %>
   <%= render "worked_for_event" %>
   <%= render "all_for_event" %>
-</div>
+</div></div>
 
 <%= @event.comments %>
 Created <%= @event.created_at %></br>

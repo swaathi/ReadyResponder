@@ -1,11 +1,14 @@
 // Place all the styles related to the Events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
 @import "bootstrap";
 
-body { padding-top: 60px; };
+body {padding-top: 120px; }
 
 @import "bootstrap-responsive";
+
 /* css for timepicker */
 .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
 .ui-timepicker-div dl { text-align: left; }

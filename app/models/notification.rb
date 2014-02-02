@@ -1,5 +1,5 @@
 class Notification < ActiveRecord::Base
-  attr_accessible :author_id, :body, :channels, :send_trigger, :comments, :event, :event_id, :sent_at, :status, :subject
+  attr_accessible :author_id, :body, :channels, :send_trigger, :comments, :event, :event_id, :sent_at, :status, :subject, :recipient_ids, :person_ids
 
   CHANNELS= ['email']
   STATUSES= ['New', 'Not Sent', 'Scheduled', 'Sending', 'Complete']
@@ -24,8 +24,9 @@ class Notification < ActiveRecord::Base
     self.send_trigger = 'Manual-Now'
   end
 
-  def author
-    Person.find(self.author_id)
+  def author_name
+    author = Person.find(self.author_id) unless author_id.blank?
+    return author.name if author
   end
   def expiration_date
   # Pending on this feature. This will tell the notifiation when to quit
@@ -41,11 +42,13 @@ class Notification < ActiveRecord::Base
     self.update_attributes(status: 'Working')
     event = self.event
     self.recipient_groups.each do |group|
-      event.roster(group).each do |recipient|
-
+      event.roster(group).each do |person|
+        person.notifications << self
         if self.channels.include? "email"
-          recipient.email.each do |email_address|
+          person.email_channels.each do |email_address|
             MessageMailer.callout(self, recipient, email_address.content).deliver
+            # Need to create a message now to capture what we just sent
+            # self.messages.create(
           end
         end
       end

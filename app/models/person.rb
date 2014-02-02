@@ -56,8 +56,10 @@ class Person < ActiveRecord::Base
   STATUS = ['Leave of Absence', 'Inactive', 'Active', 'Applicant','Prospect','Declined']
   DEPARTMENT = ['Police', 'CERT', 'Other']
 
-  def email
-    channels.email
+  def email_channels
+    email = []
+    email << self.channels.email unless channels.blank?
+    return email
   end
 
   def fullname

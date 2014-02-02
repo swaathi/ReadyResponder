@@ -1,6 +1,7 @@
-<% content_for :sidebar do %>
-  <%= link_to 'Return to Event', event_path(@event), :class => 'btn' %></br></br>
-  <%= link_to("Send It !", notify_path(@notification ), method: :Post, :class => 'btn btn-mini') %>
+<% content_for :submenu do %>
+  <li><%= link_to 'Switch to Event', event_path(@event) %></li>
+  <li><%= link_to 'Edit Notification', edit_notification_path(@notification) %></li>
+  <li><%= link_to("Send It !", notify_path(@notification ), method: :Post) %></li>
 <% end %>
 
 
@@ -12,7 +13,7 @@
 
 <p>
   <b>Author:</b>
-  <%= @notification.author.name %>
+  <%= @notification.author_name %>
 </p>
 
 <p>

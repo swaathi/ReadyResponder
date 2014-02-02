@@ -5,12 +5,14 @@
       <thead>
         <tr>
           <th>Recipient</th>
+          <th>Intention</th>
         </tr>
       </thead>
       <tbody>
         <% @notification.recipients.each do |recipient| %>
           <tr>
-            <td><%= link_to recipient, recipient %></td>
+            <td><%= link_to recipient.name, recipient %></td>
+            <td><%= recipient.last_intention %><%= recipient.id %></td>
           </tr>
         <% end %>
       </tbody>

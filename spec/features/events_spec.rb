@@ -125,8 +125,8 @@ describe Event do
 
     it "an event page" do
       visit event_path(event)
-      within('#sidebar') do
-        page.should have_content "Return to"
+      within('#submenu') do
+        page.should have_content "Edit"
       end
       page.should have_content(event.title)
       current_path.should == event_path(event)

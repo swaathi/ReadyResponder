@@ -1,3 +1,7 @@
+<% content_for :submenu do %>
+  <li><%= link_to "Create Notification", new_notification_path %></li>
+<% end %>
+
 <table id="notifications" class="datatable display table table-striped table-bordered" >
   <caption><h3><%= 'Notifications' %></h3></caption>
   <thead>

@@ -32,24 +32,36 @@ describe Notification do
     let(:notification)   { FactoryGirl.create(:notification, event: event)}
     let(:second_notification)   { FactoryGirl.create(:notification)}
     let(:third_notification)   { FactoryGirl.create(:notification, event: event)}
+    let(:sheldon) { FactoryGirl.create(:recipient, notification: notification)}
+    let(:matt) { FactoryGirl.create(:recipient, notification: second_notification)}
 
     it 'recipients as a division' do
+      sheldon.should be_valid  # This is to ensure it gets created
+      Recipient.any_instance.stub(:name).and_return('Sheldon')
+   #  I still don't get why this doesn't work,
+      #  but the any_instance call does ...
+      #  sheldon.stub(:name).and_return('Sheldon')
       visit event_notification_path(event, notification)
       within('#notification_recipients') do
-        page.should have_content "Sheldon"
+        page.should have_content 'Sheldon'
       end
- 
+    end
+
+    it 'shows the correct recipients' do
+
+      pending 'just needs to be written, thats all'
     end
 
     it 'an index page' do
       second_notification.stub(:event).and_return(second_event)
       visit notifications_path
       page.should have_content('Notifications')
+      page.should have_content(second_notification.subject)
     end
     it 'an edit form' do
       notification.stub(:event).and_return(event)
       visit edit_notification_path(notification)
-      within("#sidebar") do
+      within("#submenu") do
         page.should have_content("Cancel")
       end
       page.should have_content(notification.send_trigger)
@@ -57,8 +69,8 @@ describe Notification do
 
     it "a show page" do
       visit event_notification_path(event, notification)
-      within('#sidebar') do
-        page.should have_content "Return to"
+      within('#submenu') do
+        page.should have_content "Switch to"
       end
       page.should have_content(event.title)
       current_path.should == event_notification_path(event, notification)

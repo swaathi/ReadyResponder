@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140104184131) do
+ActiveRecord::Schema.define(:version => 20140108015850) do
 
   create_table "activities", :force => true do |t|
     t.string   "content"
@@ -168,17 +168,13 @@ ActiveRecord::Schema.define(:version => 20140104184131) do
     t.integer  "recipient_id"
     t.string   "status"
     t.string   "channel"
-    t.string   "content"
     t.datetime "processed_at"
     t.string   "processed_by"
     t.string   "slug"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-  end
-
-  create_table "messages_people", :id => false, :force => true do |t|
-    t.integer "message_id"
-    t.integer "person_id"
+    t.text     "body"
+    t.string   "subject"
   end
 
   create_table "moves", :force => true do |t|

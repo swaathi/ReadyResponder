@@ -1,7 +1,7 @@
-<% content_for :sidebar do %>
-  <%= link_to 'Return to Event', event_path(@event), :class => 'btn' %></br></br>
+<% content_for :submenu do %>
+  <li><%= link_to 'Cancel', notifications_path %></li>
 <% end %>
 
-<h1>New notification</h1>
+<h1>New Notification</h1>
 <%= render 'form' %>
 

@@ -9,6 +9,7 @@
     <%= f.input :send_trigger, :as => :select, :collection => Notification::SEND_TRIGGERS %>
     <%= f.input :subject %>
     <%= f.input :body %>
+    <%= f.association :people, :as => :check_boxes, :collection => Person.active %>
     <%= f.input :comments %>
   </div>
 

@@ -33,8 +33,8 @@ class NotificationsController < ApplicationController
   end
 
   def new
-    @event = Event.find(params[:event_id])
-    @notification = Notification.new(:event => @event)
+    @notification = Notification.new
+    @event = Event.find(params[:event_id]) if params[:event_id]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @notification }

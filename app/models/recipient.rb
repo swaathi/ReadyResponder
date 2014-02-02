@@ -7,7 +7,15 @@ class Recipient < ActiveRecord::Base
   has_many :messages
   has_many :responses
 
-  def to_s
+  def name
     self.person.name
+  end
+
+  def last_intention
+    if !(responses.blank?)
+      responses.last.intention
+    else
+      "No response yet"
+    end
   end
 end
