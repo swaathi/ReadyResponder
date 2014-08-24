@@ -19,17 +19,18 @@ class Notification < ActiveRecord::Base
 
   def initialize(attributes = {})
     super
-    self.channels = ['email']
-    self.status = 'New'
-    self.send_trigger = 'Manual-Now'
+    channels = ['email']
+    status = 'New'
+    send_trigger = 'Manual-Now'
   end
 
   def author_name
     author = Person.find(self.author_id) unless author_id.blank?
     return author.name if author
   end
+
   def expiration_date
-  # Pending on this feature. This will tell the notifiation when to quit
+  # Pending on this feature. This will tell the notifiation when to quit trying
   #  date = DateTime.parse("2001-08-01 08:00:00")
   #  Time.now
   end
@@ -39,17 +40,18 @@ class Notification < ActiveRecord::Base
   end
 
   def notify
-    self.update_attributes(status: 'Working')
+    self.update_attribute(:status, 'Working')
     event = self.event
-    self.recipient_groups.each do |group|
-      event.roster(group).each do |person|
-        person.notifications << self
-        if self.channels.include? "email"
-          person.email_channels.each do |email_address|
-            MessageMailer.callout(self, recipient, email_address.content).deliver
-            # Need to create a message now to capture what we just sent
-            # self.messages.create(
-          end
+    recipients.each do |recipient|
+      person = recipient.person
+      if self.channels.include? "email"
+        person.email_channels.first.each do |email_address|
+          MessageMailer.callout(self, recipient, email_address.content).deliver
+          # Need to create a message now to capture what we just sent
+          Message.create(:recipient => recipient,
+                          :status => 'Sent',
+                          :channel => 'EMail',
+                          :processed_at => Time.now)
         end
       end
     end

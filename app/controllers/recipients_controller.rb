@@ -14,6 +14,8 @@ class RecipientsController < ApplicationController
   # GET /recipients/1.json
   def show
     @recipient = Recipient.find(params[:id])
+    @notification = @recipient.notification
+    @person = @recipient.person
 
     respond_to do |format|
       format.html # show.html.erb

@@ -14,10 +14,10 @@ class Ability
       can [:read, :update, :create, :edit], Channel
       can [:read, :update, :create, :edit], Cert
       can [:read, :update, :create, :edit], Item
+      can [:read, :update, :create, :edit], Inspection
       can [:read, :update, :create, :edit], Event
       can [:read, :update, :create, :edit], Course
       can [:read, :update, :create, :edit], Skill
-      can [:read, :update, :create, :edit], Inspection
       can [:read, :update, :create, :edit], Location
       can [:read, :update, :create, :edit], Repair
       can [:read, :create], Activity
@@ -32,8 +32,12 @@ class Ability
       can [:read, :create], Activity
    elsif current_user.roles.to_s.include? 'Reader'
       can [:read], [Person, Channel, Timecard, Cert, Item, Event, Course, Skill, Inspection, Repair, Activity]
-      can [:signin], Person
-      can :orgchart, Person
-    end
+      can [:signin, :orgchart], Person
+   elsif current_user.roles.to_s.include? 'Inventory'
+      can [:read, :update, :create, :edit], Item
+      can [:read, :update, :create, :edit], Inspection
+      can [:read, :update, :create, :edit], Repair
+      can [:read, :update, :create, :edit], Location
+   end
   end
 end

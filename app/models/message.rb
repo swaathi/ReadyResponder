@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  attr_accessible :channel, :content, :recipient_id, :processed_at, :processed_by, :slug, :status
+  attr_accessible :channel, :content, :recipient, :processed_at, :processed_by, :slug, :status
 
   belongs_to :recipient
   has_one :person, :through => :recipient

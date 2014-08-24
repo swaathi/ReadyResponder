@@ -2,12 +2,12 @@
 
 <p>
   <b>Person:</b>
-  <%= @recipient.person_id %>
+  <%= link_to @person.name, @person %>
 </p>
 
 <p>
   <b>Notification:</b>
-  <%= @recipient.notification_id %>
+  <%= link_to @notification.subject, @notification %>
 </p>
 
 <p>
@@ -15,6 +15,3 @@
   <%= @recipient.uuid %>
 </p>
 
-
-<%= link_to 'Edit', edit_recipient_path(@recipient) %> |
-<%= link_to 'Back', recipients_path %>
