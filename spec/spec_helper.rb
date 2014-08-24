@@ -42,7 +42,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.include Devise::TestHelpers, :type => :controller
-  config.include(MailerMacros)
-  config.extend AuthorizationViewHelper, type: :feature
+  config.include MailerMacros
+  config.include AuthorizationViewHelper
   #config.before(:each) {reset_email}
 end

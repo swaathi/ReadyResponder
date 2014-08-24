@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 jQuery ->
-  $('#applicants').dataTable
+  $('.datatable').dataTable
     sPaginationType: "full_numbers"
     "aoColumns": [null,
                   null,

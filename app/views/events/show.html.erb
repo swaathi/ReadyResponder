@@ -3,11 +3,6 @@
   <li><%= link_to "Export", event_path(@event, format: "xlsx") %></li>
   <li><%= link_to "Create Notification", new_event_notification_path(@event) %></li>
 <% end %>
-<% content_for :sidebar do %>
-  <%= link_to 'Return to Events', events_path, :class => 'btn' %></br></br>
-  <%= link_to 'Edit Event', edit_event_path(@event), :class => 'btn' if can? :edit, @event  %></br></br>
-  <%= link_to "Excel", event_path(@event, format: "xlsx"), :class => 'btn btn-mini' %>
- <% end %>
 
 <h3><%= @event.title %></h3>
 <p><b>Location:</b> <%= @event.location %></p>

@@ -45,7 +45,7 @@
             <ul class="dropdown-menu">
               <li><%= link_to "Notifications", notifications_path %></li>
               <li class="divider"></li>
-              <li><%#= link_to "New Notification", new_notification_path if can? :create, Notification %></li>
+              <li><%= link_to "New Notification", new_notification_path if can? :create, Notification %></li>
             </ul>
           </li>
           <li><%= link_to "Inventory", items_path %></li>

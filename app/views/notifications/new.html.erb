@@ -1,7 +1,8 @@
-<% content_for :submenu do %>
-  <li><%= link_to 'Cancel', notifications_path %></li>
-<% end %>
+
 
 <h1>New Notification</h1>
 <%= render 'form' %>
 
+<% content_for :submenu do %>
+  <li><%= link_to 'Cancel', notifications_path %></li>
+<% end %>
