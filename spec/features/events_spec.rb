@@ -55,6 +55,23 @@ describe Event do
       event.roster('Unknown').first.should eq(person1)
       visit event_path(event)  #Need to reload it after the changes to the timecards
       current_path.should == event_path(event)
+
+      @event = Event.last
+      @event.timecards.count.should eq(0)
+      @timecard_person2 = FactoryGirl.create(:timecard, event: @event, person: @person2, intention: "Available")
+      @timecard_person3 = FactoryGirl.create(:timecard, event: @event, person: @person3, intention: "Unavailable")
+      @timecard_person4 = FactoryGirl.create(:timecard, event: @event, person: @person4, intention: "Scheduled")
+      @timecard_person5 = FactoryGirl.create(:timecard, event: @event, person: @person5, intention: "Scheduled", outcome: "Worked", actual_start_time: "2013-10-31 18:30" )
+      @event.timecards.count.should eq(4)
+      @event.available_people.count.should eq(1)
+      @event.available_people.first.person.should eq(@person2)
+      @event.timecards.unavailable.count.should eq(1)
+      @event.timecards.unavailable.first.person.should eq(@person3)
+      @event.timecards.scheduled.count.should eq(1)
+      @event.timecards.scheduled.first.person.should eq(@person4)
+      @event.unknown_people.count.should eq(1)
+      visit event_path(@event)  #Need to reload it after the changes to the timecards
+      current_path.should == event_path(@event)
       within("#event_timecards") do
 
         within("#unknown") do

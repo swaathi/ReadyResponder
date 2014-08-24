@@ -60,7 +60,9 @@ gem 'bcrypt-ruby', '~> 3.0.0'
  gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
+gem 'capistrano', '~> 2.15'
+# This is used by Capistrano, but 2.8 has issues
+gem "net-ssh", "~> 2.7.0"
 
 # To use debugger
 # gem 'debugger'

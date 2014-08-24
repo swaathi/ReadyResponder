@@ -1,14 +1,19 @@
 class Timecard < ActiveRecord::Base
   before_save :pull_defaults_from_event
   before_save :calc_durations
-  attr_accessible :intention, :intended_start_time, :intended_end_time,
+  attr_accessible :intention, :intended_start_time, :intended_end_time, 
                   :outcome, :actual_start_time, :actual_end_time, :event_id, :person_id, :category, :description
 
   belongs_to :person
   belongs_to :event
 
+<<<<<<< HEAD
   INTENTION_CHOICES = ['Unknown', 'Available', 'Scheduled','Not Needed']
   OUTCOME_CHOICES = ["Not Needed", 'Worked', 'Unavailable', 'AWOL', 'Vacation']
+=======
+  INTENTION_CHOICES = ['Available', 'Scheduled', 'Unavailable']
+  OUTCOME_CHOICES = ["Not Needed", 'Worked', 'Unavailable', 'AWOL', "Vacation" ]
+>>>>>>> 5ea1bb9c307f2a17a9cad085b617d0c7e2dc638e
 
   def intended_end_date_cannot_be_before_intended_start
     if ((!intended_end_time.blank?) and (!intended_start_time.blank?)) and intended_end_time < intended_start_time
@@ -32,21 +37,6 @@ class Timecard < ActiveRecord::Base
   validate :intended_end_date_cannot_be_before_intended_start
   validate :actual_end_date_cannot_be_before_actual_start
   #validate :has_no_duplicate_timecard
-
-  # Postgres distinguishes between null and an empty string, others do not
-  # I think I want to turn all these scopes into one, and pass in the intention
-  # However, this may not work, since I sometimes need to use intention and outcome
-  scope :unknown, ->     { where(intention: "Unknown") }
-  scope :available, ->   { where(intention: "Available", outcome:['', nil]) }
-  scope :scheduled, ->   { where(intention: "Scheduled", outcome:['', nil]) }
-  scope :unavailable, -> { where(intention: "Unavailable") }
-  scope :worked, -> { where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].not_eq(nil)) }
-
-  scope :howdy, -> { where(intention: 'Howdy') }
-
-  def self.working
-    where(outcome: "Worked").where(Timecard.arel_table['actual_end_time'].eq(nil))
-  end
 
   def self.available
     where(intention: "Available", outcome:['', nil])

@@ -83,12 +83,18 @@ class Person < ActiveRecord::Base
     (self.firstname + " " + self.lastname)
   end
 
+  def sar_level
+    return 1 if self.skilled?("SAR Tech 1")
+    return 2 if self.skilled?("SAR Tech 2")
+    return 3 if self.skilled?("SAR Tech 3")
+    return 99
+  end
+
   def csz
     self.city + " " + self.state + " " + self.zipcode
   end
 
   def state=(value)
-    # custom actions
     write_attribute(:state, value.strip.upcase)
   end
 
