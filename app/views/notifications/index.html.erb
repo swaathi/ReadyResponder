@@ -7,6 +7,7 @@
   <thead>
     <tr>
       <th>Subject</th>
+      <th>Event</th>
       <th>Status</th>
       <th>Channels</th>
       <th>Sent at</th>
@@ -17,6 +18,7 @@
     <% @notifications.each do |notification| %>
     <tr>
       <td><%= link_to(notification.subject,  notification) %></td>
+      <td><%= notification.event_name  %></td>
       <td><%= notification.status %></td>
       <td><%= notification.channels %></td>
       <td><%= notification.sent_at %></td>

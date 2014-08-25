@@ -13,7 +13,7 @@ class NotificationsController < ApplicationController
       @event = Event.find(params[:event_id])
       @notifications = @event.notifications
     else
-      @notifications = Notification.all
+      @notifications = Notification.all(:include => :event)
     end
 
     respond_to do |format|

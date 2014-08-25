@@ -33,7 +33,8 @@ Lims3::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  # config.assets.debug = true
+  config.assets.debug = false
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true

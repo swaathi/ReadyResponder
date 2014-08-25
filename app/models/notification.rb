@@ -29,6 +29,11 @@ class Notification < ActiveRecord::Base
     return author.name if author
   end
 
+  def event_name
+    event = self.event
+    return event.title if event
+  end
+
   def expiration_date
   # Pending on this feature. This will tell the notifiation when to quit trying
   #  date = DateTime.parse("2001-08-01 08:00:00")
