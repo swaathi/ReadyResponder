@@ -12,6 +12,9 @@ gem 'cancan'
 #gem "taps"
 #gem 'validates_timeliness', '~> 3.0'
 
+# The gem that was recommended to me for QRCode
+# gem 'rqrcode'
+
 group :test, :development do
   gem 'thin' # Better server when using "rails s"
   gem "rspec-rails"  # Better tests
