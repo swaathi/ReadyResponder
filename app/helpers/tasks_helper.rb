@@ -1,47 +1,38 @@
 module TasksHelper
   def task_status_class(task)
-    color = task_status_color(task.status)
-    return "class=\"#{color}\"" if color
+    case task.status
+    when 'Full'
+      return 'class="success"'
+    when 'Partially Filled'
+      return 'class="warning"'
+    when 'Empty'
+      return 'class="danger"'
+    else
+      # Including Cancelled
+      return nil
+    end
   end
 
   def task_status_label(task)
-    content_tag(:span, task.status, class: task_label_class(task.status))
-  end
-
-  def task_priority_label(task)
-    content_tag(:span,
-                task.priority_str,
-                class: task_priority_label_class(task.priority))
+    content_tag(:span, task.status, class: task_label_class(task))
   end
 
   private
-    def task_label_class(task_status)
-      return nil if task_status.blank?
-      color = task_status_color(task_status) || 'default'
-      return "label label-#{color}"
-    end
-
-    def task_status_color(task_status)
+    def task_label_class(task)
       # The options are found in app/models/task.rb: STATUS_CHOICES
-      case task_status
-      when 'Full', 'Satisfied'
-        return 'success'
-      when 'Adequate'
-        return 'warning'
-      when 'Inadequate', 'Empty'
-        return 'danger'
+      return nil if task.status.blank?
+      case task.status
+      when 'Full'
+        return 'label label-success'
+      when 'Partially Filled'
+        return 'label label-warning'
+      when 'Empty'
+        return 'label label-danger'
+      when 'Cancelled'
+        return 'label label-default'
       else
-        return nil
+        # This should only happen if another status is added.
+        return 'label label-default'
       end
-    end
-
-    def task_priority_label_class(task_priority)
-      return nil if task_priority.blank?
-      color = task_priority_color(task_priority) || 'default'
-      return "label label-#{color}"
-    end
-
-    def task_priority_color(task_priority)
-      return 'default'
     end
 end
