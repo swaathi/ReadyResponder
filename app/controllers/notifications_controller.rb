@@ -10,7 +10,7 @@ class NotificationsController < ApplicationController
 
   # GET /notifications/1
   def show
-    @event_title = @notification.event ? @notification.event.title : 'None'
+    @event_title = @notification.title
   end
 
   # GET /notifications/new
@@ -49,15 +49,15 @@ class NotificationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_notification
-      @notification = Notification.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_notification
+    @notification = Notification.find_by(id: params[:id])
+  end
 
-    # Only allow a trusted parameter "white list" through.
-    def notification_params
-      params.require(:notification).permit(:event_id, :author_id, :status,
-         :time_to_live, :interval, :iterations_to_escalation, :groups,
-          :scheduled_start_time, :start_time, :channels, :departments, :divisions)
-    end
+  # Only allow a trusted parameter "white list" through.
+  def notification_params
+    params.require(:notification).permit(:event_id, :author_id, :status,
+       :time_to_live, :interval, :iterations_to_escalation, :groups,
+        :scheduled_start_time, :start_time, :channels, :departments, :divisions)
+  end
 end

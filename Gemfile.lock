@@ -185,6 +185,7 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
+    mysql2 (0.4.5)
     nenv (0.3.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -199,7 +200,6 @@ GEM
     paper_trail (5.2.2)
       activerecord (>= 3.0, < 6.0)
       request_store (~> 1.1)
-    pg (0.17.1)
     pkg-config (1.1.7)
     poltergeist (1.10.0)
       capybara (~> 2.1)
@@ -390,8 +390,8 @@ DEPENDENCIES
   letter_opener
   mailcatcher
   meta_request
+  mysql2
   paper_trail
-  pg (~> 0.17.0)
   poltergeist
   protected_attributes
   pry
@@ -415,4 +415,4 @@ DEPENDENCIES
   web-console (~> 3.0)
 
 BUNDLED WITH
-   1.13.2
+   1.13.6
